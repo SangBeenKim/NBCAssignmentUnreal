@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Assignment06.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Assignment06.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Assignment06Editor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Assignment06">
+      <UniqueIdentifier>{763C8ED2-248D-3106-BC84-82519970A1B8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Assignment06\Assignment06.Build.cs">
+      <Filter>Source\Assignment06</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Assignment06\Assignment06.cpp">
+      <Filter>Source\Assignment06</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Assignment06\Assignment06.h">
+      <Filter>Source\Assignment06</Filter>
+    </ClCompile>
+    <Filter Include="Source\Assignment06\Private">
+      <UniqueIdentifier>{2FA5C15B-7368-33E6-B5E6-D5B9891EFD44}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Assignment06\Private\RotateFloor.cpp">
+      <Filter>Source\Assignment06\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\Assignment06\Public">
+      <UniqueIdentifier>{09BAA32B-236D-3A7A-8034-25CFDD21703F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Assignment06\Public\RotateFloor.h">
+      <Filter>Source\Assignment06\Public</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

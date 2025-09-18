@@ -4,21 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "RotateFloor.generated.h"
+#include "MoveFloor.generated.h"
 
 UCLASS()
-class ASSIGNMENT06_API ARotateFloor : public AActor
+class ASSIGNMENT06_API AMoveFloor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	ARotateFloor();
+	AMoveFloor();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "C++Classes|RootComponent")
 	USceneComponent* SceneComp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|StaticMeshComponent")
 	UStaticMeshComponent* StaticMeshComp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
-	float RotationSpeed;
+	FVector StartLocation;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
+	float MoveSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
+	float MaxRange;
 
 protected:
 	virtual void BeginPlay() override;

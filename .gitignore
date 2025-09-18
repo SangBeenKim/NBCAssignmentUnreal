@@ -508,4 +508,12 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
+# 빌드 결과물
+Binaries/
+Intermediate/
+Saved/
+
+# Visual Studio 설정 파일
+.vsconfig
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudio,unrealengine

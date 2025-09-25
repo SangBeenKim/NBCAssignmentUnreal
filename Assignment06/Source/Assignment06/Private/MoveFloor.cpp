@@ -11,7 +11,7 @@ AMoveFloor::AMoveFloor()
 	SetRootComponent(SceneComp);
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	StaticMeshComp->SetupAttachment(SceneComp);
-	MoveSpeed = 90.0f;
+	MoveSpeed = 100.0f;
 	MaxRange = 300.0f;
 
 }
@@ -20,6 +20,8 @@ AMoveFloor::AMoveFloor()
 void AMoveFloor::BeginPlay()
 {
 	Super::BeginPlay();
+	StartLocation = GetActorLocation();
+	MoveDirection = GetActorForwardVector().GetSafeNormal();
 	
 }
 
@@ -29,12 +31,20 @@ void AMoveFloor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (!FMath::IsNearlyZero(MoveSpeed))
 	{
-		StartLocation = GetActorLocation();
-		if (StartLocation.Y >= MaxRange || StartLocation.Y < 0.0f)
+		FVector CurrentLocation = GetActorLocation();
+		FVector Offset = MoveDirection * MoveSpeed * DeltaTime;
+		FVector NewLocation = CurrentLocation + Offset;
+
+		float Distance = FVector::Dist(StartLocation, NewLocation);
+
+		if (Distance >= MaxRange)
 		{
-			MoveSpeed *= -1;
+			float OverShoot = Distance - MaxRange;
+			NewLocation = StartLocation + MoveDirection * (MaxRange - OverShoot);
+			MoveDirection *= -1.0f;
 		}
-		AddActorLocalOffset(FVector(0.0f, MoveSpeed * DeltaTime, 0.0f));
+
+		SetActorLocation(NewLocation);
 	}
 }
 

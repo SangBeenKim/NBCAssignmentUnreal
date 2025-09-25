@@ -17,8 +17,10 @@ public:
 	USceneComponent* SceneComp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|StaticMeshComponent")
 	UStaticMeshComponent* StaticMeshComp;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "C++Classes|Variables")
 	FVector StartLocation;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "C++Classes|Variables")
+	FVector MoveDirection;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
 	float MoveSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")

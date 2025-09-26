@@ -12,15 +12,18 @@ class ASSIGNMENT06_API ARotateFloor : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ARotateFloor();
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "C++Classes|RootComponent")
+	USceneComponent* SceneComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|StaticMeshComponent")
+	UStaticMeshComponent* StaticMeshComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "C++Classes|Variables")
+	float RotationSpeed;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };

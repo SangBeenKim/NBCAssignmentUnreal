@@ -6,8 +6,12 @@
 // Sets default values
 ARotateFloor::ARotateFloor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	SceneComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	SetRootComponent(SceneComp);
+	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+	StaticMeshComp->SetupAttachment(SceneComp);
+	RotationSpeed = 90.0f;
 
 }
 
@@ -22,6 +26,10 @@ void ARotateFloor::BeginPlay()
 void ARotateFloor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!FMath::IsNearlyZero(RotationSpeed))
+	{
+		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));
+	}
 
 }
 

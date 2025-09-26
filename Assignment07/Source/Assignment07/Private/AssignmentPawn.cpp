@@ -24,7 +24,7 @@ AAssignmentPawn::AAssignmentPawn()
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComp->SetupAttachment(RootCapsuleComp);
 	SpringArmComp->TargetArmLength = 300.0f;
-	SpringArmComp->bUsePawnControlRotation = true;
+	SpringArmComp->bUsePawnControlRotation = false;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComp->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
@@ -60,7 +60,6 @@ void AAssignmentPawn::Move(const FInputActionValue& value)
 
 void AAssignmentPawn::Look(const FInputActionValue& value)
 {
-	if (!Controller) return;
 
 	FVector2D LookInput = value.Get<FVector2D>();
 	FRotator Rotation = SpringArmComp->GetRelativeRotation();

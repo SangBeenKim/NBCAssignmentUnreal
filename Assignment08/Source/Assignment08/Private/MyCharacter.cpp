@@ -4,6 +4,11 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
+#include "MyGameState.h"
+#include "Components/WidgetComponent.h"
+#include "Components/TextBlock.h"
 
 AMyCharacter::AMyCharacter()
 {
@@ -18,11 +23,51 @@ AMyCharacter::AMyCharacter()
 	CameraComp->SetupAttachment(SpringArmComp, USpringArmComponent::SocketName);
 	CameraComp->bUsePawnControlRotation = false;
 
+	OverHeadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverHeadWidget"));
+	OverHeadWidget->SetupAttachment(GetMesh());
+	OverHeadWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
 	NormalSpeed = 600.0f;
 	SprintSpeedMultiplier = 1.75f;
 	SprintSpeed = NormalSpeed * SprintSpeedMultiplier;
 
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+
+	MaxHealth = 100.0f;
+	Health = MaxHealth;
+}
+
+int32 AMyCharacter::GetHealth() const
+{
+	return Health;
+}
+
+void AMyCharacter::AddHealth(float Amount)
+{
+	Health = FMath::Clamp(Health + Amount, 0.0f, MaxHealth);
+	UpdateOverHeadHP();
+}
+
+void AMyCharacter::OnDeath()
+{
+	AMyGameState* MyGameState = GetWorld() ? GetWorld()->GetGameState<AMyGameState>() : nullptr;
+	if (MyGameState)
+	{
+		MyGameState->OnGameOver();
+	}
+}
+
+void AMyCharacter::UpdateOverHeadHP()
+{
+	if (!OverHeadWidget) return;
+
+	UUserWidget* OverHeadWidgetInstance = OverHeadWidget->GetUserWidgetObject();
+	if (!OverHeadWidgetInstance) return;
+
+	if (UTextBlock* HPText = Cast<UTextBlock>(OverHeadWidgetInstance->GetWidgetFromName(TEXT("OverHeadHP"))))
+	{
+		HPText->SetText(FText::FromString(FString::Printf(TEXT("%.0f / %.0f"), Health, MaxHealth)));
+	}
 }
 
 void AMyCharacter::Move(const FInputActionValue& Value)
@@ -81,9 +126,23 @@ void AMyCharacter::StopSprint(const FInputActionValue& Value)
 	}
 }
 
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Health = FMath::Clamp(Health - DamageAmount, 0.0f, MaxHealth);
+	UpdateOverHeadHP();
+	if (Health <= 0.0f)
+	{
+		OnDeath();
+	}
+	return ActualDamage;
+}
+
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	UpdateOverHeadHP();
 	
 }
 
